@@ -1,0 +1,1 @@
+New-AzVM -Name vm_test -ResourceGroupName scritping_rg
