@@ -1,0 +1,32 @@
+#Create and Set-up Account
+az account set --subscription 233750e3-a3da-4a8b-bc2c-b1675731d161
+#Create Resource Group
+az group create --location eastus --name VnetRG
+#Create Virtual Network
+az network vnet create -n myVNET --resource-group VnetRG --subnet-name Default --address-prefixes 10.0.0.0/16
+#Get SubnetID
+--subnet $(az network vnet subnet show -g Net-DB --vnet-name CIND-DB-WEU-VNET-8532 -n SUBNET-1 -o tsv --query id)
+#Create Linux VMs with no public IP address
+az vm create --name test3vm `
+--resource-group vm-rg `
+--image ubuntults `
+--subnet $(az network vnet subnet show -g network-rg --vnet-name Hub -n default -o tsv --query id) `
+--ssh-key-values "C:\Users\brian\OneDrive - SkillStorm\Azure_Classes\Pubic_Keys\BastionKey.pub" `
+--admin-username "azureuser" `
+--nsg $(az network nsg show --resource-group Network_Security --name NetworkSecurity -o tsv --query id) `
+--no-wait `
+--public-ip-address """"
+#Create Windows VMs with no public IP address
+az vm create --name WindowsVM `
+--resource-group VMRG `
+--image Win2019Datacenter `
+--subnet $(az network vnet subnet show -g VnetRG --vnet-name myVNET -n default -o tsv --query id) `
+--admin-password "AvaMohr0414!" `
+--admin-username "azureuser" `
+--nsg $(az network nsg show --resource-group Network_Security --name NetworkSecurity -o tsv --query id) `
+--no-wait `
+--public-ip-address """"
+#Create Azure SSH Secret Key for Bastion (Create keyvault in portal and SSH Key. Download SSH key to local computer)
+az keyvault secret set --vault-name 'GomestechSecretVault' -n 'bastion-ssh-key' -f "C:\Users\brian\Downloads\BastionKey.pem"
+
+$(az network nsg show --resource-group Network_Security --name NetworkSecurity -o tsv --query id)
