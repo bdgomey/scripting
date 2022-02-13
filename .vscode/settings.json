@@ -1,0 +1,9 @@
+{
+    "azureFunctions.deploySubpath": "Powershell/clean_up_function",
+    "azureFunctions.scmDoBuildDuringDeployment": true,
+    "azureFunctions.pythonVenv": ".venv",
+    "azureFunctions.projectLanguage": "PowerShell",
+    "azureFunctions.projectRuntime": "~3",
+    "debug.internalConsoleOptions": "neverOpen",
+    "azureFunctions.projectSubpath": "Powershell/clean_up_function"
+}
